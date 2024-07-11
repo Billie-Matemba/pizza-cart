@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfect Pizza</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.0/dist/alpine.min.js" defer></script>
+
+</head>
+<body> 
+
+    <h1>Perfect Pizza</h1>
+
+   <div x-data="{
+    title: 'Shopping Cart', 
+   smallcount: 0, 
+   mediumcount: 0, 
+   largecount: 0,
+   isCheckout: false,
+    inputValue: '',
+    message: '',
+    showMessage: function(msg) {
+            this.message = msg;
+            setTimeout(() => this.message = '', 3000);
+    },
+    clearCart: function() {
+            this.smallcount = 0;
+            this.mediumcount = 0;
+            this.largecount = 0;
+        
+    },
+    totalCost: function() { return (this.smallcount * 50) + (this.mediumcount * 90) + (this.largecount * 130); }
+
+    }">
+   
+<div class ="pizza contact "> 
+    <h1 x-text="title"></h1>
+    <div class="txt">
+        <p>Small R50</p>
+       <p><button @click="smallcount ++" class="button"> + </button></p> 
+        <p><button @click="if (smallcount > 0) smallcount--" class="button"> - </button></p>
+        <p x-text="smallcount" ></p>
+    </div>
+
+    <div class="txt">
+       <p>Medium R90</p> 
+       <p><button @click="mediumcount ++" class="button"> + </button></p> 
+        <p><button @click="if (mediumcount > 0) mediumcount--" class="button"> - </button></p>
+        <p x-text="mediumcount"></p>
+    </div>
+
+    <div class="txt">
+        <p>Large R130</p>
+       <p><button @click="largecount ++" class="button"> + </button></p> 
+        <p><button @click="if (largecount > 0) largecount--" class="button"> - </button></p>
+        <p x-text="largecount"></p>
+    </div>
+
+    <div >
+        Total Cost: <span x-text="totalCost()"></span>
+        <button x-show="totalCost() > 0" @click="isCheckout = true">Check out</button>
+    </div>
+</div>
+
+<div x-show="isCheckout">
+    
+    <label>
+        Payment amount:
+        <input type="text" x-model="inputValue">
+    </label>
+    <button @click="
+        if (parseFloat(inputValue) >= totalCost()) {
+            showMessage('Enjoy your pizzas');
+            clearCart();
+            isCheckout = false;
+        } else {
+            showMessage('Sorry - that is not enough money!');
+        }
+    ">Pay</button>
+</div>
+  
+<div x-text="message" class="message"></div>
+   
+    <div class="pizzas" >
+        <div class="pizza small_pizza">
+            <h2>Small Pizza</h2>
+            <img src="pizza.png" width="100">
+           <h3>
+            R50.00</h3>
+            <div>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aut magnam natus esse, debitis blanditiis numquam quod repellendus minus ea tempore? Officia, hic! Reprehenderit molestias ipsam deleniti obcaecati, non voluptatem eos.
+            </div>
+        
+            <div >
+                <button @click="smallcount++">BUY</button>  
+               </div>
+        
+        </div> 
+
+<div class="pizza medium_pizza">
+    <h2>Medium Pizza</h2>
+    <img src="pizza.png" width="125">
+    <h3>R90.00</h3>
+    <div>
+    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Adipisci, vel, asperiores commodi non obcaecati cupiditate magni, incidunt saepe pariatur libero numquam rerum? Esse aut unde, mollitia ex repellendus velit quisquam?
+    </div>
+
+    <div>
+     <button @click="mediumcount++">BUY</button>   
+    </div>
+
+</div>
+
+<div class="pizza large_pizza">
+    <h2>Large Pizza</h2>
+    <img src="pizza.png" width="150">
+    <h3>R130.00</h3>
+    <div>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum magni deleniti, eum repellat voluptas quam hic nihil modi vero possimus ipsa tempora similique quasi accusamus ex, enim temporibus quo ipsam.
+    </div>
+
+    <div>
+        <button @click="largecount++">BUY</button>   
+       </div>
+
+</div>
+
+
+    </div>
+<div class="pizza contact">
+    <h2>Contact Details</h2>
+    Contact us at: 011 456 7890 info@perfectpizza.co.za
+</div>
+</div> 
+</body>
+</html>
